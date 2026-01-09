@@ -407,6 +407,39 @@ export default function PitchPage() {
         </div>
       </section>
 
+      {/* AI Personality Demo */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <a
+            href="/demo"
+            className="block bg-gradient-to-br from-[#C4785A]/20 via-[#C4785A]/10 to-[#C4785A]/20 rounded-2xl p-8 border border-[#C4785A]/30 hover:border-[#C4785A]/50 transition-colors group"
+          >
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="flex items-center gap-3 text-5xl">
+                <span>🎤</span>
+                <span className="text-3xl text-white/30">+</span>
+                <span>💕</span>
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <div className="inline-flex items-center gap-2 bg-[#C4785A]/30 text-[#C4785A] px-2 py-0.5 rounded text-xs font-medium mb-2">
+                  Interactive Demo
+                </div>
+                <h3 className="text-2xl font-bold mb-2 group-hover:text-[#C4785A] transition-colors">
+                  Meet Alan & Amanda
+                </h3>
+                <p className="text-white/60">
+                  AI personalities inspired by everyone&apos;s favourite property renovation duo.
+                  Watch them help villa owners - and wind each other up. This is what AI with personality looks like.
+                </p>
+              </div>
+              <div className="bg-[#C4785A] text-white px-6 py-3 rounded-xl font-medium group-hover:bg-[#B56A4F] transition-colors">
+                Try It →
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
       {/* Sign Up Form */}
       <section className="py-20 px-4 bg-gradient-to-b from-[#1A1A1A] to-[#C4785A]/20">
         <div className="max-w-xl mx-auto">
