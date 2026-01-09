@@ -20,6 +20,16 @@ export default function DemoPage() {
   const [currentSpeaker, setCurrentSpeaker] = useState<'alan' | 'amanda'>('alan')
   const chatEndRef = useRef<HTMLDivElement>(null)
 
+  // Pitch deck form state
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [formLoading, setFormLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
+
+  // Track if user has engaged with the chat
+  const hasEngaged = messages.length > 2 // More than just the initial greeting(s)
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
@@ -171,6 +181,31 @@ export default function DemoPage() {
   const resetChat = () => {
     setMode(null)
     setMessages([])
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setFormLoading(true)
+
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Failed to sign up')
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+    } finally {
+      setFormLoading(false)
+    }
   }
 
   return (
@@ -462,12 +497,87 @@ export default function DemoPage() {
         )}
       </main>
 
+      {/* Pitch Deck Form - Only shows after engagement */}
+      {hasEngaged && (
+        <section className="py-16 px-4 bg-gradient-to-b from-[#1A1A1A] to-[#C4785A]/20 mt-12">
+          <div className="max-w-xl mx-auto">
+            {!submitted ? (
+              <div className="bg-white rounded-2xl p-8 text-[#1A1A1A]">
+                <div className="text-center mb-6">
+                  <div className="text-4xl mb-3">🎉</div>
+                  <h2 className="text-2xl font-bold mb-2">You&apos;ve Met the Team!</h2>
+                  <p className="text-[#6B6B6B]">
+                    Now imagine this personality across your entire platform.
+                    Get the full pitch deck to learn more.
+                  </p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Your Name</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-[#DEDEDE] focus:border-[#1A1A1A] focus:outline-none"
+                      placeholder="John Smith"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Email Address</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-[#DEDEDE] focus:border-[#1A1A1A] focus:outline-none"
+                      placeholder="john@example.com"
+                      required
+                    />
+                  </div>
+
+                  {error && (
+                    <p className="text-red-500 text-sm text-center">{error}</p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={formLoading}
+                    className="w-full bg-[#C4785A] text-white py-4 rounded-xl font-medium hover:bg-[#B56A4F] transition-colors disabled:opacity-50"
+                  >
+                    {formLoading ? 'Sending...' : 'Send Me the Pitch Deck'}
+                  </button>
+
+                  <p className="text-xs text-[#9B9B9B] text-center">
+                    We respect your privacy. No spam, just the deck.
+                  </p>
+                </form>
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl p-8 text-[#1A1A1A] text-center">
+                <div className="text-5xl mb-4">📧</div>
+                <h2 className="text-2xl font-bold mb-2">Check Your Inbox!</h2>
+                <p className="text-[#6B6B6B] mb-6">
+                  We&apos;ve sent the pitch deck to <strong>{email}</strong>
+                </p>
+                <p className="text-sm text-[#9B9B9B]">
+                  Can&apos;t find it? Check your spam folder or{' '}
+                  <a href="mailto:mark@leadballoon.co.uk" className="text-[#C4785A] hover:underline">
+                    contact us directly
+                  </a>
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* Footer */}
-      <footer className="border-t border-white/10 mt-20">
+      <footer className="border-t border-white/10 mt-12">
         <div className="max-w-4xl mx-auto px-4 py-8 text-center text-white/40 text-sm">
           <p>AI Personality Demo for VillaCare</p>
           <p className="mt-2">
-            Imagine this, but officially. <span className="text-[#C4785A]">Let&apos;s talk.</span>
+            <Link href="/" className="text-[#C4785A] hover:underline">← Back to VillaCare</Link>
           </p>
         </div>
       </footer>

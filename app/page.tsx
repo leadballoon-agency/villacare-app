@@ -9,12 +9,6 @@ interface ChatMessage {
 }
 
 export default function PitchPage() {
-  const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
-
   // Chat state
   const [chatOpen, setChatOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -51,31 +45,6 @@ export default function PitchPage() {
       // Silent fail
     } finally {
       setChatLoading(false)
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
-
-    try {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name }),
-      })
-
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Failed to sign up')
-      }
-
-      setSubmitted(true)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -407,105 +376,30 @@ export default function PitchPage() {
         </div>
       </section>
 
-      {/* AI Personality Demo */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+      {/* CTA - Meet Alan & Amanda */}
+      <section className="py-20 px-4 bg-gradient-to-b from-[#1A1A1A] to-[#C4785A]/20">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-4 text-6xl mb-6">
+            <span>🎤</span>
+            <span className="text-4xl text-white/30">+</span>
+            <span>💕</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Meet Alan & Amanda
+          </h2>
+          <p className="text-white/60 text-lg mb-8 max-w-xl mx-auto">
+            Experience our AI personalities in action. Watch them help villa owners,
+            banter with each other, and show you what AI with personality looks like.
+          </p>
           <a
             href="/demo"
-            className="block bg-gradient-to-br from-[#C4785A]/20 via-[#C4785A]/10 to-[#C4785A]/20 rounded-2xl p-8 border border-[#C4785A]/30 hover:border-[#C4785A]/50 transition-colors group"
+            className="inline-block bg-[#C4785A] text-white px-8 py-4 rounded-xl font-medium text-lg hover:bg-[#B56A4F] transition-colors"
           >
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="flex items-center gap-3 text-5xl">
-                <span>🎤</span>
-                <span className="text-3xl text-white/30">+</span>
-                <span>💕</span>
-              </div>
-              <div className="flex-1 text-center md:text-left">
-                <div className="inline-flex items-center gap-2 bg-[#C4785A]/30 text-[#C4785A] px-2 py-0.5 rounded text-xs font-medium mb-2">
-                  Interactive Demo
-                </div>
-                <h3 className="text-2xl font-bold mb-2 group-hover:text-[#C4785A] transition-colors">
-                  Meet Alan & Amanda
-                </h3>
-                <p className="text-white/60">
-                  AI personalities inspired by everyone&apos;s favourite property renovation duo.
-                  Watch them help villa owners - and wind each other up. This is what AI with personality looks like.
-                </p>
-              </div>
-              <div className="bg-[#C4785A] text-white px-6 py-3 rounded-xl font-medium group-hover:bg-[#B56A4F] transition-colors">
-                Try It →
-              </div>
-            </div>
+            Try the Interactive Demo →
           </a>
-        </div>
-      </section>
-
-      {/* Sign Up Form */}
-      <section className="py-20 px-4 bg-gradient-to-b from-[#1A1A1A] to-[#C4785A]/20">
-        <div className="max-w-xl mx-auto">
-          {!submitted ? (
-            <div className="bg-white rounded-2xl p-8 text-[#1A1A1A]">
-              <h2 className="text-2xl font-bold mb-2 text-center">Get the Full Pitch Deck</h2>
-              <p className="text-[#6B6B6B] text-center mb-6">
-                Enter your details and we&apos;ll send you our investor deck immediately.
-              </p>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1.5">Your Name</label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#DEDEDE] focus:border-[#1A1A1A] focus:outline-none"
-                    placeholder="John Smith"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1.5">Email Address</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#DEDEDE] focus:border-[#1A1A1A] focus:outline-none"
-                    placeholder="john@example.com"
-                    required
-                  />
-                </div>
-
-                {error && (
-                  <p className="text-red-500 text-sm text-center">{error}</p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-[#1A1A1A] text-white py-4 rounded-xl font-medium hover:bg-[#333] transition-colors disabled:opacity-50"
-                >
-                  {loading ? 'Sending...' : 'Send Me the Deck'}
-                </button>
-
-                <p className="text-xs text-[#9B9B9B] text-center">
-                  We respect your privacy. No spam, just the deck.
-                </p>
-              </form>
-            </div>
-          ) : (
-            <div className="bg-white rounded-2xl p-8 text-[#1A1A1A] text-center">
-              <div className="text-5xl mb-4">📧</div>
-              <h2 className="text-2xl font-bold mb-2">Check Your Inbox!</h2>
-              <p className="text-[#6B6B6B] mb-6">
-                We&apos;ve sent the pitch deck to <strong>{email}</strong>
-              </p>
-              <p className="text-sm text-[#9B9B9B]">
-                Can&apos;t find it? Check your spam folder or{' '}
-                <a href="mailto:mark@leadballoon.co.uk" className="text-[#C4785A] hover:underline">
-                  contact us directly
-                </a>
-              </p>
-            </div>
-          )}
+          <p className="text-white/40 text-sm mt-4">
+            Then get the full pitch deck
+          </p>
         </div>
       </section>
 
