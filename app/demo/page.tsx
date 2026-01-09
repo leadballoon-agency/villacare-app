@@ -471,6 +471,30 @@ export default function DemoPage() {
                 ))}
               </div>
             </div>
+
+            {/* CTA to Clara - appears after engagement */}
+            {hasEngaged && (
+              <div className="mt-8 bg-gradient-to-r from-[#C4785A]/20 to-[#C4785A]/10 rounded-2xl p-6 border border-[#C4785A]/30">
+                <div className="flex flex-col md:flex-row items-center gap-4">
+                  <div className="text-4xl">👋</div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="font-bold text-lg mb-1">Ready to meet the real thing?</h3>
+                    <p className="text-white/60 text-sm">
+                      Clara is our co-founder and lead cleaner - actually on the ground in Alicante.
+                      Chat with her on the live platform.
+                    </p>
+                  </div>
+                  <a
+                    href="https://alicantecleaners.com/clara"
+                    target="_blank"
+                    rel="noopener"
+                    className="bg-[#C4785A] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#B56A4F] transition-colors whitespace-nowrap"
+                  >
+                    Meet Clara →
+                  </a>
+                </div>
+              </div>
+            )}
           </>
         )}
       </main>
