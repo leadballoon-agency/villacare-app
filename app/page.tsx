@@ -89,8 +89,8 @@ export default function PitchPage() {
             <span className="font-semibold text-lg">VillaCare</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="/demo" className="text-sm bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1.5 rounded-full font-medium hover:opacity-90">
-              🎤 AI Demo
+            <a href="/demo" className="text-sm bg-[#C4785A] text-white px-3 py-1.5 rounded-full font-medium hover:bg-[#B56A4F]">
+              AI Demo
             </a>
             <a href="https://alicantecleaners.com" target="_blank" rel="noopener" className="text-sm text-white/60 hover:text-white">
               Visit Platform
