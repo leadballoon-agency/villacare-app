@@ -355,7 +355,9 @@ export default function DemoPage() {
                       className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                         msg.role === 'user'
                           ? 'bg-white text-[#1A1A1A]'
-                          : 'bg-[#C4785A]/20 text-white'
+                          : msg.agent === 'alan'
+                            ? 'bg-blue-500/20 text-white border border-blue-500/20'
+                            : 'bg-pink-500/20 text-white border border-pink-500/20'
                       }`}
                     >
                       {msg.content}
