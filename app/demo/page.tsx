@@ -7,35 +7,54 @@ import Link from 'next/link'
 interface ChatMessage {
   role: 'user' | 'assistant'
   content: string
+  agent?: 'alan' | 'amanda'
 }
 
-type Agent = 'alan' | 'amanda'
+type Mode = 'alan' | 'amanda' | 'duo'
 
 export default function DemoPage() {
-  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null)
+  const [mode, setMode] = useState<Mode | null>(null)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [currentSpeaker, setCurrentSpeaker] = useState<'alan' | 'amanda'>('alan')
   const chatEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const selectAgent = (agent: Agent) => {
-    setSelectedAgent(agent)
-    setMessages([
-      {
-        role: 'assistant',
-        content: agent === 'alan'
-          ? "Oh hello gorgeous! 👋 I'm here to help with your Spanish villa - cleaning, pools, gardens, the LOT. What can I do for you, love?"
-          : "Hello darling! 💕 Welcome to VillaCare. I'm here to make sure your Spanish villa is absolutely taken care of. How can I help you today, lovely?"
-      }
-    ])
+  const selectMode = (selectedMode: Mode) => {
+    setMode(selectedMode)
+    if (selectedMode === 'duo') {
+      setMessages([
+        {
+          role: 'assistant',
+          agent: 'alan',
+          content: "Oh my GOD, Amanda! We're doing VillaCare together now! Can you IMAGINE?! 🎤"
+        },
+        {
+          role: 'assistant',
+          agent: 'amanda',
+          content: "I KNOW darling! Finally, a platform that actually makes Spanish villa ownership easy. Where was this when we were doing the Spanish Job?! 💕"
+        }
+      ])
+      setCurrentSpeaker('alan')
+    } else {
+      setMessages([
+        {
+          role: 'assistant',
+          agent: selectedMode,
+          content: selectedMode === 'alan'
+            ? "Oh hello gorgeous! 👋 I'm here to help with your Spanish villa - cleaning, pools, gardens, the LOT. What can I do for you, love?"
+            : "Hello darling! 💕 Welcome to VillaCare. I'm here to make sure your Spanish villa is absolutely taken care of. How can I help you today, lovely?"
+        }
+      ])
+    }
   }
 
   const sendMessage = async () => {
-    if (!input.trim() || loading || !selectedAgent) return
+    if (!input.trim() || loading || !mode) return
 
     const userMessage = input.trim()
     setInput('')
@@ -43,15 +62,104 @@ export default function DemoPage() {
     setLoading(true)
 
     try {
-      const res = await fetch(`/api/${selectedAgent}`, {
+      if (mode === 'duo') {
+        // In duo mode, both respond!
+        const alanRes = await fetch('/api/alan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [
+              ...messages.map(m => ({ role: m.role, content: m.agent ? `[${m.agent === 'alan' ? 'You' : 'Amanda'}]: ${m.content}` : m.content })),
+              { role: 'user', content: `A villa owner asks: "${userMessage}" - Give a short, punchy response and maybe make a joke about Amanda.` }
+            ]
+          }),
+        })
+
+        if (alanRes.ok) {
+          const alanData = await alanRes.json()
+          setMessages(prev => [...prev, { role: 'assistant', agent: 'alan', content: alanData.message }])
+        }
+
+        // Small delay for Amanda's response
+        await new Promise(r => setTimeout(r, 500))
+
+        const amandaRes = await fetch('/api/amanda', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [
+              ...messages.map(m => ({ role: m.role, content: m.agent ? `[${m.agent === 'amanda' ? 'You' : 'Alan'}]: ${m.content}` : m.content })),
+              { role: 'user', content: `A villa owner asks: "${userMessage}" - Give a short, warm response and maybe lovingly tease Alan.` }
+            ]
+          }),
+        })
+
+        if (amandaRes.ok) {
+          const amandaData = await amandaRes.json()
+          setMessages(prev => [...prev, { role: 'assistant', agent: 'amanda', content: amandaData.message }])
+        }
+      } else {
+        const res = await fetch(`/api/${mode}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: [...messages, { role: 'user', content: userMessage }] }),
+        })
+
+        if (res.ok) {
+          const data = await res.json()
+          setMessages(prev => [...prev, { role: 'assistant', agent: mode, content: data.message }])
+        }
+      }
+    } catch {
+      // Silent fail
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const startDuoBanter = async () => {
+    if (loading) return
+    setLoading(true)
+
+    try {
+      // Get the last message to continue from
+      const lastMessages = messages.slice(-4)
+
+      // Alan responds to the conversation
+      const alanRes = await fetch('/api/alan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [...messages, { role: 'user', content: userMessage }] }),
+        body: JSON.stringify({
+          messages: [
+            ...lastMessages.map(m => ({ role: m.role, content: m.agent ? `[${m.agent === 'alan' ? 'You' : 'Amanda'}]: ${m.content}` : m.content })),
+            { role: 'user', content: 'Continue the conversation with Amanda about VillaCare or Spanish villas. Be playful and tease her a bit. Keep it short - 1-2 sentences.' }
+          ]
+        }),
       })
 
-      if (res.ok) {
-        const data = await res.json()
-        setMessages(prev => [...prev, { role: 'assistant', content: data.message }])
+      if (alanRes.ok) {
+        const alanData = await alanRes.json()
+        setMessages(prev => [...prev, { role: 'assistant', agent: 'alan', content: alanData.message }])
+      }
+
+      await new Promise(r => setTimeout(r, 800))
+
+      // Amanda responds
+      const updatedMessages = [...messages]
+      const amandaRes = await fetch('/api/amanda', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            ...lastMessages.map(m => ({ role: m.role, content: m.agent ? `[${m.agent === 'amanda' ? 'You' : 'Alan'}]: ${m.content}` : m.content })),
+            { role: 'user', content: 'Respond to Alan about VillaCare or Spanish villas. Be warm but give him a bit of gentle teasing back. Keep it short - 1-2 sentences.' }
+          ]
+        }),
+      })
+
+      if (amandaRes.ok) {
+        const amandaData = await amandaRes.json()
+        setMessages(prev => [...prev, { role: 'assistant', agent: 'amanda', content: amandaData.message }])
       }
     } catch {
       // Silent fail
@@ -61,7 +169,7 @@ export default function DemoPage() {
   }
 
   const resetChat = () => {
-    setSelectedAgent(null)
+    setMode(null)
     setMessages([])
   }
 
@@ -79,7 +187,7 @@ export default function DemoPage() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-12">
-        {!selectedAgent ? (
+        {!mode ? (
           <>
             {/* Agent Selection */}
             <div className="text-center mb-12">
@@ -87,15 +195,42 @@ export default function DemoPage() {
                 Meet Your Villa Assistants
               </h1>
               <p className="text-white/60 max-w-xl mx-auto">
-                AI personalities that make villa management actually fun.
+                AI personalities inspired by our favourite property duo.
                 Choose who you&apos;d like to chat with.
               </p>
             </div>
 
+            {/* Duo Card - Featured */}
+            <button
+              onClick={() => selectMode('duo')}
+              className="w-full bg-gradient-to-br from-purple-500/20 via-pink-500/10 to-pink-500/20 rounded-2xl p-8 border border-purple-500/30 text-left hover:border-pink-500/50 transition-colors group mb-6"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <span className="text-5xl">🎤</span>
+                <span className="text-4xl">+</span>
+                <span className="text-5xl">💕</span>
+                <span className="ml-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">NEW!</span>
+              </div>
+              <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Watch Alan & Amanda Chat Together!
+              </h2>
+              <p className="text-white/60 mb-4">
+                The chaos of Spanish Job... but make it AI. Watch them banter, help with your villa, and lovingly wind each other up. This could go anywhere!
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Hilarious</span>
+                <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Chaotic</span>
+                <span className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white/70 px-2 py-1 rounded text-xs">Unpredictable</span>
+              </div>
+              <p className="text-white/50 mt-4 text-sm italic">
+                &quot;Oh my GOD Amanda, not the pool filter AGAIN!&quot; &quot;Alan, focus darling!&quot;
+              </p>
+            </button>
+
             <div className="grid md:grid-cols-2 gap-6">
               {/* Alan Card */}
               <button
-                onClick={() => selectAgent('alan')}
+                onClick={() => selectMode('alan')}
                 className="bg-gradient-to-br from-purple-500/20 to-purple-500/5 rounded-2xl p-8 border border-purple-500/30 text-left hover:border-purple-500/50 transition-colors group"
               >
                 <div className="text-6xl mb-4">🎤</div>
@@ -117,7 +252,7 @@ export default function DemoPage() {
 
               {/* Amanda Card */}
               <button
-                onClick={() => selectAgent('amanda')}
+                onClick={() => selectMode('amanda')}
                 className="bg-gradient-to-br from-pink-500/20 to-pink-500/5 rounded-2xl p-8 border border-pink-500/30 text-left hover:border-pink-500/50 transition-colors group"
               >
                 <div className="text-6xl mb-4">💕</div>
@@ -171,32 +306,50 @@ export default function DemoPage() {
                 onClick={resetChat}
                 className="text-white/60 hover:text-white text-sm flex items-center gap-2"
               >
-                ← Choose different assistant
+                ← Choose different mode
               </button>
               <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                selectedAgent === 'alan'
-                  ? 'bg-purple-500/20 text-purple-300'
-                  : 'bg-pink-500/20 text-pink-300'
+                mode === 'duo'
+                  ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white'
+                  : mode === 'alan'
+                    ? 'bg-purple-500/20 text-purple-300'
+                    : 'bg-pink-500/20 text-pink-300'
               }`}>
-                Chatting with {selectedAgent === 'alan' ? 'Alan' : 'Amanda'}
+                {mode === 'duo' ? '🎤 Alan & Amanda 💕' : mode === 'alan' ? 'Chatting with Alan' : 'Chatting with Amanda'}
               </div>
             </div>
 
             <div className={`rounded-2xl border overflow-hidden ${
-              selectedAgent === 'alan'
-                ? 'border-purple-500/30 bg-gradient-to-b from-purple-500/10 to-transparent'
-                : 'border-pink-500/30 bg-gradient-to-b from-pink-500/10 to-transparent'
+              mode === 'duo'
+                ? 'border-purple-500/30 bg-gradient-to-b from-purple-500/10 via-pink-500/5 to-transparent'
+                : mode === 'alan'
+                  ? 'border-purple-500/30 bg-gradient-to-b from-purple-500/10 to-transparent'
+                  : 'border-pink-500/30 bg-gradient-to-b from-pink-500/10 to-transparent'
             }`}>
               {/* Chat Header */}
               <div className={`px-6 py-4 border-b ${
-                selectedAgent === 'alan' ? 'border-purple-500/20' : 'border-pink-500/20'
+                mode === 'duo' ? 'border-purple-500/20' : mode === 'alan' ? 'border-purple-500/20' : 'border-pink-500/20'
               }`}>
                 <div className="flex items-center gap-3">
-                  <div className="text-3xl">{selectedAgent === 'alan' ? '🎤' : '💕'}</div>
-                  <div>
-                    <h2 className="font-bold">{selectedAgent === 'alan' ? 'Alan' : 'Amanda'}</h2>
-                    <p className="text-sm text-white/50">Villa Assistant</p>
-                  </div>
+                  {mode === 'duo' ? (
+                    <>
+                      <div className="text-3xl">🎤</div>
+                      <span className="text-white/30">+</span>
+                      <div className="text-3xl">💕</div>
+                      <div>
+                        <h2 className="font-bold">Alan & Amanda</h2>
+                        <p className="text-sm text-white/50">The Property Duo</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-3xl">{mode === 'alan' ? '🎤' : '💕'}</div>
+                      <div>
+                        <h2 className="font-bold">{mode === 'alan' ? 'Alan' : 'Amanda'}</h2>
+                        <p className="text-sm text-white/50">Villa Assistant</p>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -207,11 +360,16 @@ export default function DemoPage() {
                     key={i}
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
+                    {msg.role === 'assistant' && msg.agent && (
+                      <div className="mr-2 flex-shrink-0">
+                        <span className="text-2xl">{msg.agent === 'alan' ? '🎤' : '💕'}</span>
+                      </div>
+                    )}
                     <div
                       className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                         msg.role === 'user'
                           ? 'bg-white text-[#1A1A1A]'
-                          : selectedAgent === 'alan'
+                          : msg.agent === 'alan'
                             ? 'bg-purple-500/20 text-white'
                             : 'bg-pink-500/20 text-white'
                       }`}
@@ -222,10 +380,11 @@ export default function DemoPage() {
                 ))}
                 {loading && (
                   <div className="flex justify-start">
-                    <div className={`px-4 py-3 rounded-2xl ${
-                      selectedAgent === 'alan' ? 'bg-purple-500/20' : 'bg-pink-500/20'
-                    }`}>
-                      <span className="animate-pulse">Typing...</span>
+                    <div className="mr-2 flex-shrink-0">
+                      <span className="text-2xl animate-bounce">✨</span>
+                    </div>
+                    <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-4 py-3 rounded-2xl">
+                      <span className="animate-pulse">Thinking...</span>
                     </div>
                   </div>
                 )}
@@ -240,9 +399,11 @@ export default function DemoPage() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                    placeholder={selectedAgent === 'alan'
-                      ? "Ask Alan anything, love..."
-                      : "Ask Amanda anything, darling..."
+                    placeholder={mode === 'duo'
+                      ? "Ask them both something..."
+                      : mode === 'alan'
+                        ? "Ask Alan anything, love..."
+                        : "Ask Amanda anything, darling..."
                     }
                     className="flex-1 bg-white/10 px-4 py-3 rounded-xl border border-white/20 focus:border-white/40 focus:outline-none"
                   />
@@ -250,14 +411,25 @@ export default function DemoPage() {
                     onClick={sendMessage}
                     disabled={loading || !input.trim()}
                     className={`px-6 py-3 rounded-xl font-medium disabled:opacity-50 ${
-                      selectedAgent === 'alan'
-                        ? 'bg-purple-500 hover:bg-purple-600'
-                        : 'bg-pink-500 hover:bg-pink-600'
+                      mode === 'duo'
+                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
+                        : mode === 'alan'
+                          ? 'bg-purple-500 hover:bg-purple-600'
+                          : 'bg-pink-500 hover:bg-pink-600'
                     }`}
                   >
                     Send
                   </button>
                 </div>
+                {mode === 'duo' && (
+                  <button
+                    onClick={startDuoBanter}
+                    disabled={loading}
+                    className="w-full mt-3 py-2 rounded-xl border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-sm transition-colors disabled:opacity-50"
+                  >
+                    ✨ Let them chat to each other
+                  </button>
+                )}
               </div>
             </div>
 
@@ -265,12 +437,17 @@ export default function DemoPage() {
             <div className="mt-6">
               <p className="text-white/40 text-sm mb-3">Try asking:</p>
               <div className="flex flex-wrap gap-2">
-                {[
+                {(mode === 'duo' ? [
+                  "What's the worst thing that happened on Spanish Job?",
+                  "Who's better at DIY?",
+                  "Tell me about managing a Spanish villa",
+                  "Any horror stories from your renovations?",
+                ] : [
                   "I need my villa cleaned before guests arrive",
                   "Can you help with pool maintenance?",
                   "I'm worried about leaving my villa empty",
                   "How does VillaCare work?",
-                ].map((suggestion, i) => (
+                ]).map((suggestion, i) => (
                   <button
                     key={i}
                     onClick={() => setInput(suggestion)}
