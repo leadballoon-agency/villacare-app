@@ -238,24 +238,24 @@ export default function DemoPage() {
             {/* Duo Card - Featured */}
             <button
               onClick={() => selectMode('duo')}
-              className="w-full bg-gradient-to-br from-purple-500/20 via-pink-500/10 to-pink-500/20 rounded-2xl p-8 border border-purple-500/30 text-left hover:border-pink-500/50 transition-colors group mb-6"
+              className="w-full bg-gradient-to-br from-[#C4785A]/20 via-[#C4785A]/10 to-[#C4785A]/20 rounded-2xl p-8 border border-[#C4785A]/30 text-left hover:border-[#C4785A]/50 transition-colors group mb-6"
             >
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-5xl">🎤</span>
-                <span className="text-4xl">+</span>
+                <span className="text-4xl text-white/30">+</span>
                 <span className="text-5xl">💕</span>
-                <span className="ml-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">NEW!</span>
+                <span className="ml-auto bg-[#C4785A] text-white px-3 py-1 rounded-full text-xs font-bold">RECOMMENDED</span>
               </div>
-              <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h2 className="text-2xl font-bold mb-2 text-[#C4785A]">
                 Watch Alan & Amanda Chat Together!
               </h2>
               <p className="text-white/60 mb-4">
                 The chaos of Spanish Job... but make it AI. Watch them banter, help with your villa, and lovingly wind each other up. This could go anywhere!
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Hilarious</span>
-                <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Chaotic</span>
-                <span className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white/70 px-2 py-1 rounded text-xs">Unpredictable</span>
+                <span className="bg-[#C4785A]/20 text-[#C4785A] px-2 py-1 rounded text-xs">Hilarious</span>
+                <span className="bg-[#C4785A]/20 text-[#C4785A] px-2 py-1 rounded text-xs">Chaotic</span>
+                <span className="bg-[#C4785A]/20 text-[#C4785A] px-2 py-1 rounded text-xs">Unpredictable</span>
               </div>
               <p className="text-white/50 mt-4 text-sm italic">
                 &quot;Oh my GOD Amanda, not the pool filter AGAIN!&quot; &quot;Alan, focus darling!&quot;
@@ -266,21 +266,21 @@ export default function DemoPage() {
               {/* Alan Card */}
               <button
                 onClick={() => selectMode('alan')}
-                className="bg-gradient-to-br from-purple-500/20 to-purple-500/5 rounded-2xl p-8 border border-purple-500/30 text-left hover:border-purple-500/50 transition-colors group"
+                className="bg-white/5 rounded-2xl p-8 border border-white/10 text-left hover:border-[#C4785A]/50 transition-colors group"
               >
                 <div className="text-6xl mb-4">🎤</div>
-                <h2 className="text-2xl font-bold mb-2 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-bold mb-2 group-hover:text-[#C4785A] transition-colors">
                   Chat with Alan
                 </h2>
                 <p className="text-white/60 mb-4">
                   Camp, hilarious, and surprisingly helpful. He&apos;ll sort your villa out while making you laugh.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Cheeky</span>
-                  <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Theatrical</span>
-                  <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Warm</span>
+                  <span className="bg-white/10 text-white/70 px-2 py-1 rounded text-xs">Cheeky</span>
+                  <span className="bg-white/10 text-white/70 px-2 py-1 rounded text-xs">Theatrical</span>
+                  <span className="bg-white/10 text-white/70 px-2 py-1 rounded text-xs">Warm</span>
                 </div>
-                <p className="text-purple-400 mt-4 text-sm font-medium">
+                <p className="text-[#C4785A] mt-4 text-sm font-medium">
                   &quot;Oh babes, your villa&apos;s going to be SPARKLING!&quot;
                 </p>
               </button>
@@ -288,21 +288,21 @@ export default function DemoPage() {
               {/* Amanda Card */}
               <button
                 onClick={() => selectMode('amanda')}
-                className="bg-gradient-to-br from-pink-500/20 to-pink-500/5 rounded-2xl p-8 border border-pink-500/30 text-left hover:border-pink-500/50 transition-colors group"
+                className="bg-white/5 rounded-2xl p-8 border border-white/10 text-left hover:border-[#C4785A]/50 transition-colors group"
               >
                 <div className="text-6xl mb-4">💕</div>
-                <h2 className="text-2xl font-bold mb-2 group-hover:text-pink-400 transition-colors">
+                <h2 className="text-2xl font-bold mb-2 group-hover:text-[#C4785A] transition-colors">
                   Chat with Amanda
                 </h2>
                 <p className="text-white/60 mb-4">
                   Warm, glamorous, and reassuring. She&apos;ll make you feel like everything&apos;s going to be fabulous.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Supportive</span>
-                  <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Glamorous</span>
-                  <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Encouraging</span>
+                  <span className="bg-white/10 text-white/70 px-2 py-1 rounded text-xs">Supportive</span>
+                  <span className="bg-white/10 text-white/70 px-2 py-1 rounded text-xs">Glamorous</span>
+                  <span className="bg-white/10 text-white/70 px-2 py-1 rounded text-xs">Encouraging</span>
                 </div>
-                <p className="text-pink-400 mt-4 text-sm font-medium">
+                <p className="text-[#C4785A] mt-4 text-sm font-medium">
                   &quot;Don&apos;t worry darling, you&apos;re in safe hands.&quot;
                 </p>
               </button>
@@ -343,28 +343,14 @@ export default function DemoPage() {
               >
                 ← Choose different mode
               </button>
-              <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                mode === 'duo'
-                  ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white'
-                  : mode === 'alan'
-                    ? 'bg-purple-500/20 text-purple-300'
-                    : 'bg-pink-500/20 text-pink-300'
-              }`}>
-                {mode === 'duo' ? '🎤 Alan & Amanda 💕' : mode === 'alan' ? 'Chatting with Alan' : 'Chatting with Amanda'}
+              <div className="px-3 py-1 rounded-full text-sm font-medium bg-[#C4785A]/20 text-[#C4785A]">
+                {mode === 'duo' ? '🎤 Alan & Amanda 💕' : mode === 'alan' ? 'Chatting with Alan 🎤' : 'Chatting with Amanda 💕'}
               </div>
             </div>
 
-            <div className={`rounded-2xl border overflow-hidden ${
-              mode === 'duo'
-                ? 'border-purple-500/30 bg-gradient-to-b from-purple-500/10 via-pink-500/5 to-transparent'
-                : mode === 'alan'
-                  ? 'border-purple-500/30 bg-gradient-to-b from-purple-500/10 to-transparent'
-                  : 'border-pink-500/30 bg-gradient-to-b from-pink-500/10 to-transparent'
-            }`}>
+            <div className="rounded-2xl border overflow-hidden border-[#C4785A]/30 bg-gradient-to-b from-[#C4785A]/10 to-transparent">
               {/* Chat Header */}
-              <div className={`px-6 py-4 border-b ${
-                mode === 'duo' ? 'border-purple-500/20' : mode === 'alan' ? 'border-purple-500/20' : 'border-pink-500/20'
-              }`}>
+              <div className="px-6 py-4 border-b border-[#C4785A]/20">
                 <div className="flex items-center gap-3">
                   {mode === 'duo' ? (
                     <>
@@ -404,9 +390,7 @@ export default function DemoPage() {
                       className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                         msg.role === 'user'
                           ? 'bg-white text-[#1A1A1A]'
-                          : msg.agent === 'alan'
-                            ? 'bg-purple-500/20 text-white'
-                            : 'bg-pink-500/20 text-white'
+                          : 'bg-[#C4785A]/20 text-white'
                       }`}
                     >
                       {msg.content}
@@ -418,7 +402,7 @@ export default function DemoPage() {
                     <div className="mr-2 flex-shrink-0">
                       <span className="text-2xl animate-bounce">✨</span>
                     </div>
-                    <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-4 py-3 rounded-2xl">
+                    <div className="bg-[#C4785A]/20 px-4 py-3 rounded-2xl">
                       <span className="animate-pulse">Thinking...</span>
                     </div>
                   </div>
@@ -445,13 +429,7 @@ export default function DemoPage() {
                   <button
                     onClick={sendMessage}
                     disabled={loading || !input.trim()}
-                    className={`px-6 py-3 rounded-xl font-medium disabled:opacity-50 ${
-                      mode === 'duo'
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
-                        : mode === 'alan'
-                          ? 'bg-purple-500 hover:bg-purple-600'
-                          : 'bg-pink-500 hover:bg-pink-600'
-                    }`}
+                    className="px-6 py-3 rounded-xl font-medium disabled:opacity-50 bg-[#C4785A] hover:bg-[#B56A4F]"
                   >
                     Send
                   </button>
