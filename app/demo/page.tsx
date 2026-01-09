@@ -20,9 +20,6 @@ export default function DemoPage() {
   const [currentSpeaker, setCurrentSpeaker] = useState<'alan' | 'amanda'>('alan')
   const chatEndRef = useRef<HTMLDivElement>(null)
 
-  // Track if user has engaged with the chat - need at least 3 back-and-forths
-  const hasEngaged = messages.filter(m => m.role === 'user').length >= 3
-
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
@@ -440,35 +437,6 @@ export default function DemoPage() {
               </div>
             </div>
 
-            {/* Natural transition to Clara - appears after engagement */}
-            {hasEngaged && (
-              <div className="mt-8 space-y-4">
-                <div className="text-center text-white/40 text-sm">
-                  ✨ Enjoying the banter? Meet the real deal...
-                </div>
-                <a
-                  href="https://alicantecleaners.com/clara"
-                  target="_blank"
-                  rel="noopener"
-                  className="block bg-white/5 hover:bg-white/10 rounded-2xl p-6 border border-white/10 hover:border-[#C4785A]/30 transition-all group"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-[#C4785A]/20 rounded-full flex items-center justify-center text-2xl">
-                      👋
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-bold group-hover:text-[#C4785A] transition-colors">Chat with Clara</h3>
-                      <p className="text-white/50 text-sm">
-                        Co-founder & lead cleaner • Actually in Alicante • The real thing
-                      </p>
-                    </div>
-                    <div className="text-[#C4785A] font-medium">
-                      →
-                    </div>
-                  </div>
-                </a>
-              </div>
-            )}
           </>
         )}
       </main>
