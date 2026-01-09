@@ -102,8 +102,8 @@ export async function POST(req: NextRequest) {
     const client = getAnthropic()
 
     const response = await client.messages.create({
-      model: 'claude-3-5-haiku-20241022',
-      max_tokens: 500,
+      model: 'claude-opus-4-5-20251101',
+      max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: messages.map((m: ChatMessage) => ({
         role: m.role,
