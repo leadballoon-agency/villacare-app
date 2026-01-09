@@ -27,8 +27,8 @@ export default function DemoPage() {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
 
-  // Track if user has engaged with the chat
-  const hasEngaged = messages.length > 2 // More than just the initial greeting(s)
+  // Track if user has engaged with the chat - need at least 3 back-and-forths
+  const hasEngaged = messages.filter(m => m.role === 'user').length >= 3
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
