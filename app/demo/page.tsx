@@ -418,14 +418,15 @@ export default function DemoPage() {
               <p className="text-white/40 text-sm mb-3">Try asking:</p>
               <div className="flex flex-wrap gap-2">
                 {(mode === 'duo' ? [
-                  "What's the worst thing that happened on Spanish Job?",
-                  "Who's better at DIY?",
-                  "Tell me about managing a Spanish villa",
+                  "Send me the pitch deck",
+                  "What's the business model?",
+                  "What's the market opportunity?",
                   "Any horror stories from your renovations?",
+                  "Who's better at DIY?",
                 ] : [
                   "I need my villa cleaned before guests arrive",
                   "Can you help with pool maintenance?",
-                  "I'm worried about leaving my villa empty",
+                  "Send me the pitch deck",
                   "How does VillaCare work?",
                 ]).map((suggestion, i) => (
                   <button
