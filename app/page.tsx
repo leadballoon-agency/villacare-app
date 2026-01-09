@@ -106,8 +106,8 @@ export default function PitchPage() {
             <span className="text-[#C4785A]">in Europe</span>
           </h1>
           <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto leading-relaxed">
-            We&apos;re building the Fresha for villas. A platform where service providers become business owners,
-            and villa owners get everything they need in one place.
+            Starting with cleaning, expanding to all villa services, ending in real estate.
+            We&apos;re building the trusted relationship layer with Europe&apos;s villa owners.
           </p>
         </div>
       </section>
@@ -117,20 +117,20 @@ export default function PitchPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">€2.3B</div>
-              <div className="text-sm text-white/60 mt-1">Spain Vacation Rental Market</div>
+              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">€180B</div>
+              <div className="text-sm text-white/60 mt-1">Spain Real Estate Market</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">350K+</div>
               <div className="text-sm text-white/60 mt-1">Vacation Properties in Spain</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">7</div>
+              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">8</div>
               <div className="text-sm text-white/60 mt-1">AI Agents Powering Platform</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">5+</div>
-              <div className="text-sm text-white/60 mt-1">Service Verticals Ready</div>
+              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">€25K</div>
+              <div className="text-sm text-white/60 mt-1">Avg Commission per Sale</div>
             </div>
           </div>
         </div>
@@ -290,7 +290,7 @@ export default function PitchPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#C4785A] mt-1">•</span>
-                  Network effects: more services = more sticky
+                  <strong className="text-white">Real estate: buying &amp; selling villas</strong>
                 </li>
               </ul>
             </div>
@@ -347,6 +347,57 @@ export default function PitchPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* The Endgame */}
+      <section className="py-16 px-4 bg-white/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-[#C4785A]/20 text-[#C4785A] px-3 py-1 rounded-full text-sm font-medium mb-4">
+              <span>The Endgame</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              From Cleaning to Real Estate
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              We&apos;re not building a cleaning company. We&apos;re building the trusted relationship layer
+              with villa owners - and that leads somewhere much bigger.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#C4785A]/10 via-[#C4785A]/20 to-[#C4785A]/10 rounded-2xl p-8 border border-[#C4785A]/30">
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div>
+                <div className="text-4xl mb-3">🧹</div>
+                <h3 className="font-semibold mb-2">Phase 1: Services</h3>
+                <p className="text-sm text-white/60">Weekly visits. Trust built. Platform sticky.</p>
+                <p className="text-xs text-[#C4785A] mt-2">€60/clean</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-3">🏠</div>
+                <h3 className="font-semibold mb-2">Phase 2: Management</h3>
+                <p className="text-sm text-white/60">Full property management. Key holder. First call.</p>
+                <p className="text-xs text-[#C4785A] mt-2">€200-500/month</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-3">🔑</div>
+                <h3 className="font-semibold mb-2">Phase 3: Real Estate</h3>
+                <p className="text-sm text-white/60">Buy, sell, invest. AI-powered transactions.</p>
+                <p className="text-xs text-[#C4785A] mt-2">€15-25K/sale</p>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-8 border-t border-white/10 text-center">
+              <p className="text-white/80 text-lg">
+                Cleaners visit these properties <strong className="text-white">every week</strong>.
+                They know when owners are selling before anyone else.
+              </p>
+              <p className="text-white/50 text-sm mt-2">
+                This is the Zillow play, but with a services moat.
+              </p>
+            </div>
           </div>
         </div>
       </section>

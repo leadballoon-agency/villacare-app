@@ -49,6 +49,16 @@ The platform architecture allows team leaders to:
 3. Become one-stop-shop for villa owners
 4. Build real businesses, not just jobs
 
+THE ENDGAME - REAL ESTATE:
+- We're building the trusted relationship layer with villa owners
+- Cleaners visit these properties weekly, know when owners are selling
+- Natural progression: services → property management → real estate
+- Villa owners already trust our platform for their most valuable asset
+- Spanish vacation property market is massive and fragmented
+- AI agents can handle property inquiries, viewings, paperwork
+- Commission on a €500K villa sale = €15-25K (vs €60 per clean)
+- This is the Zillow/Rightmove play but with a services moat
+
 WHY NOW:
 1. AI enables 24/7 sales without humans
 2. WhatsApp Business API now accessible
