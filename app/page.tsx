@@ -86,9 +86,10 @@ export default function PitchPage() {
         </div>
       </section>
 
-      {/* Key Stats */}
+      {/* Market Opportunity Stats */}
       <section className="py-12 px-4 border-t border-white/10">
         <div className="max-w-4xl mx-auto">
+          <p className="text-center text-white/40 text-sm mb-6">Market Opportunity</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">€180B</div>
@@ -99,12 +100,37 @@ export default function PitchPage() {
               <div className="text-sm text-white/60 mt-1">Vacation Properties in Spain</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">8</div>
-              <div className="text-sm text-white/60 mt-1">AI Agents Powering Platform</div>
+              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">10</div>
+              <div className="text-sm text-white/60 mt-1">AI Agents in Production</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">€25K</div>
               <div className="text-sm text-white/60 mt-1">Avg Commission per Sale</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Where We Are Now - Platform Metrics */}
+      <section className="py-12 px-4 bg-gradient-to-r from-[#C4785A]/10 via-[#C4785A]/20 to-[#C4785A]/10">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-center text-white/40 text-sm mb-6">Where We Are Now</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-white">6+</div>
+              <div className="text-sm text-white/60 mt-1">Vetted Cleaners</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-white">45K+</div>
+              <div className="text-sm text-white/60 mt-1">Lines of Code</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-white">7</div>
+              <div className="text-sm text-white/60 mt-1">Languages Supported</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-[#C4785A]">Beta</div>
+              <div className="text-sm text-white/60 mt-1">Pay Cleaner Direct</div>
             </div>
           </div>
         </div>
@@ -127,16 +153,18 @@ export default function PitchPage() {
           </div>
 
           {/* AI Agents Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-16">
             {[
               { name: 'Sales Agent', desc: 'Handles inquiries 24/7, books appointments', color: 'from-green-500/20 to-green-500/5' },
               { name: 'Support Agent', desc: 'Answers owner & cleaner questions', color: 'from-blue-500/20 to-blue-500/5' },
               { name: 'Success Coach', desc: 'Helps cleaners grow their business', color: 'from-purple-500/20 to-purple-500/5' },
               { name: 'Onboarding Agent', desc: 'Guides new cleaners through setup', color: 'from-orange-500/20 to-orange-500/5' },
-              { name: 'Admin Agent', desc: '18 tools for platform management', color: 'from-red-500/20 to-red-500/5' },
+              { name: 'Admin Agent', desc: '18+ tools for platform management', color: 'from-red-500/20 to-red-500/5' },
               { name: 'Owner Agent', desc: 'Personal assistant for property owners', color: 'from-teal-500/20 to-teal-500/5' },
               { name: 'Cleaner Agent', desc: 'Helps manage bookings & schedule', color: 'from-pink-500/20 to-pink-500/5' },
               { name: 'Investor Agent', desc: 'You\'re talking to it right now!', color: 'from-[#C4785A]/20 to-[#C4785A]/5' },
+              { name: 'Alan Agent 🎤', desc: 'Camp entertainer - engages & converts', color: 'from-yellow-500/20 to-yellow-500/5' },
+              { name: 'Amanda Agent 💕', desc: 'Warm & reassuring villa assistant', color: 'from-rose-500/20 to-rose-500/5' },
             ].map((agent, i) => (
               <div key={i} className={`bg-gradient-to-br ${agent.color} rounded-xl p-4 border border-white/10`}>
                 <h4 className="font-semibold text-sm mb-1">{agent.name}</h4>
@@ -322,6 +350,47 @@ export default function PitchPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Security as Moat */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-medium mb-4">
+              <span className="w-2 h-2 bg-green-400 rounded-full" />
+              Enterprise-Grade Security
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Security That Builds Trust
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              Villa owners share sensitive access codes. We built enterprise-grade protection
+              that competitors can&apos;t match - and it&apos;s a key conversion driver.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
+              <div className="text-2xl mb-3">🔐</div>
+              <h3 className="font-semibold mb-2">AES-256 Encryption</h3>
+              <p className="text-sm text-white/60">All access codes, alarm details, and key locations encrypted at rest</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
+              <div className="text-2xl mb-3">⏰</div>
+              <h3 className="font-semibold mb-2">Just-In-Time Access</h3>
+              <p className="text-sm text-white/60">Codes only visible 24h before booking, automatically revoked after</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-5 border border-white/10">
+              <div className="text-2xl mb-3">👤</div>
+              <h3 className="font-semibold mb-2">Role-Limited</h3>
+              <p className="text-sm text-white/60">Only the assigned cleaner sees access details - not even admins</p>
+            </div>
+          </div>
+
+          <p className="text-center text-white/40 text-sm mt-6">
+            System-enforced, not policy-dependent. This is investment-grade differentiation.
+          </p>
         </div>
       </section>
 
